@@ -35,7 +35,6 @@ public class DatasourceService {
 		return em.find(cls, id);
 	}
 	
-	
 	public Object findByName(Class<?> cls, String name) {
 		return em.find(cls, name);
 	}

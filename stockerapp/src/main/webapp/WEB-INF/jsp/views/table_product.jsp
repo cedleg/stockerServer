@@ -13,6 +13,7 @@
 				<th scope="col"><c:out value="product_name"></c:out></th>
 				<th scope="col"><c:out value="product_desc"></c:out></th>
 				<th scope="col"><c:out value="product_price"></c:out></th>
+				<th scope="col"><c:out value="product_stock"></c:out></th>
 				<th scope="col"><c:out value="product_cat"></c:out></th>
 				<th scope="col"><a href="/stockerapp/form?prod_id=new"
 					class="btn btn-warning">Create new</a></th>
@@ -26,6 +27,7 @@
 					<td><c:out value="${ product.name }"></c:out></td>
 					<td><c:out value="${ product.description }"></c:out></td>
 					<td><c:out value="${ product.price }"></c:out></td>
+					<td><c:out value="${ product.stock.amount }"></c:out></td>
 					<td><c:out value="${ product.category }"></c:out></td>
 					<td><a href="/stockerapp/form?prod_id=${product.id}"
 						class="btn btn-info">Settings</a></td>

@@ -13,7 +13,7 @@
 				<th scope="col"><c:out value="mat_name"></c:out></th>
 				<th scope="col"><c:out value="mat_desc"></c:out></th>
 				<th scope="col"><c:out value="mat_price"></c:out></th>
-				<th scope="col"><c:out value="mat_amount"></c:out></th>
+				<th scope="col"><c:out value="mat_stock"></c:out></th>
 				<th scope="col"><a href="/stockerapp/form?matter_id=new"
 					class="btn btn-warning">Create new</a></th>
 			</tr>
@@ -26,7 +26,7 @@
 					<td><c:out value="${ matter.name }"></c:out></td>
 					<td><c:out value="${ matter.description }"></c:out></td>
 					<td><c:out value="${ matter.price }"></c:out></td>
-					<td><c:out value="${ matter.amount }"></c:out></td>
+					<td><c:out value="${ matter.stock }"></c:out></td>
 					<td><a href="/stockerapp/form?matter_id=${matter.id}"
 						class="btn btn-info">Settings</a></td>
 				</tr>

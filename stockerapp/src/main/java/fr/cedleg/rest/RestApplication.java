@@ -14,7 +14,6 @@ public class RestApplication extends Application {
 
 	@Override
 	public Set<Class<?>> getClasses() {
-		// TODO Auto-generated method stub
         Set<Class<?>> s = new HashSet<Class<?>>();
         s.add(MessageRestService.class);
         s.add(StockRestService.class);
@@ -23,13 +22,11 @@ public class RestApplication extends Application {
 
 	@Override
 	public Map<String, Object> getProperties() {
-		// TODO Auto-generated method stub
 		return super.getProperties();
 	}
 
 	@Override
 	public Set<Object> getSingletons() {
-		// TODO Auto-generated method stub
 		return super.getSingletons();
 	}
 

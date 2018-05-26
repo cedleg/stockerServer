@@ -9,6 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import fr.cedleg.model.BatchProducts;
 import fr.cedleg.model.Category;
@@ -27,68 +28,91 @@ public class StockRestService {
 	
     @GET()
     @Path("product/all")
-    public List<Product> getProducts() {	
-    	return dsService.getAllProducts();
+    public Response getProducts() {	
+    	List<Product> list = dsService.getAllProducts();
+    	return spreadResponse(list);
     }
     
     @GET()
     @Path("product/{id}")
-    public Product getProduct(@PathParam("id") Long id) {
-    	return (Product) dsService.find(Product.class, id);
+    public Response getProduct(@PathParam("id") Long id) {
+    	Product p = (Product) dsService.find(Product.class, id);
+    	return spreadResponse(p);
     }
     
     @GET()
     @Path("productbycat/{name}")
-    public List<Product> getProducts(@PathParam("name") String name) {
-    	return dsService.getProductsByCategory(name);
+    public Response getProducts(@PathParam("name") String name) {
+    	List<Product> list = dsService.getProductsByCategory(name);
+    	return spreadResponse(list);
     }
     
     @GET()
     @Path("batch/all")
-    public List<BatchProducts> getBathProducts() {	
-    	return dsService.getAllBathProducts();
+    public Response getBathProducts() {	
+    	List<BatchProducts> list = dsService.getAllBathProducts();
+    	return spreadResponse(list);
     }
     
     @GET()
     @Path("batch/{id}")
-    public BatchProducts getBatch(@PathParam("id") Long id) {
-    	return (BatchProducts) dsService.find(BatchProducts.class, id);	
+    public Response getBatch(@PathParam("id") Long id) {
+    	BatchProducts b = (BatchProducts) dsService.find(BatchProducts.class, id);
+    	return spreadResponse(b);
     }
     
     @GET
     @Path("category/all")
-    public List<Category> getCategories(){
-    	return dsService.getAllCategories();
+    public Response getCategories(){
+    	List<Category> list = dsService.getAllCategories();
+    	return spreadResponse(list);
     }
     
     @GET
     @Path("category/{id}")
-    public Category getCategories(@PathParam("id") Long id) {
-    	return (Category) dsService.find(Category.class, id);
+    public Response getCategories(@PathParam("id") Long id) {
+    	Category c = (Category) dsService.find(Category.class, id);
+    	return spreadResponse(c);
     }
     
     @GET
     @Path("matter/all")
-    public List<Matter> getMatters(){
-    	return dsService.getAllMatters();
+    public Response getMatters(){
+    	List<Matter> list = dsService.getAllMatters();
+    	return spreadResponse(list);
     }
     
     @GET
     @Path("matter/{id}")
-    public Matter getMatter(@PathParam("id") Long id) {
-    	return (Matter) dsService.find(Matter.class, id);
+    public Response getMatter(@PathParam("id") Long id) {
+    	Matter m = (Matter) dsService.find(Matter.class, id);
+    	if(m!=null) {
+    		return Response.status(200).entity(m).build();
+    	} else {
+    		return Response.status(400).build();
+    	}
     }
     
     @GET
     @Path("unit/all")
-    public List<Unit> getUnits(){
-    	return dsService.getAllUnits();
+    public Response getUnits(){
+    	List<Unit> list = dsService.getAllUnits();
+    	return spreadResponse(list);
     }
     
     @GET
     @Path("unit/{id}")
-    public Unit getUnit(@PathParam("id") Long id) {
-    	return (Unit) dsService.find(Unit.class, id);
+    public Response getUnit(@PathParam("id") Long id) {
+    	Unit u = (Unit) dsService.find(Unit.class, id);
+    	return spreadResponse(u);
+    }
+    
+    private Response spreadResponse(Object obj) {
+    	if(obj!=null) {
+    		return Response.status(200).entity(obj).build();
+    	} else {
+    		return Response.status(400).build();
+    	}
     }
 
 }

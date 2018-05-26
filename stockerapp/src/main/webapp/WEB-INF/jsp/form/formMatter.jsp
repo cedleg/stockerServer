@@ -46,9 +46,9 @@
 						value="<c:out value="${ matter.price }" default="0"/>">
 				</div>
 				<div class="form-group">
-					<label for="m_amount">Amount</label> <input type="number" step=".01"
-						class="form-control" id="m_amount" name="m_amount"
-						value="<c:out value="${ matter.amount }" default="0"/>">
+					<label for="m_stock">Stock</label> <input type="number" step=".01"
+						class="form-control" id="m_stock" name="m_stock"
+						value="<c:out value="${ matter.stock.amount }" default="0"/>">
 				</div>
 				<br> <br>
 				<c:if test = "${param.matter_id == 'new'}"><button type="submit" class="btn btn-success" name="btn_m_create">Create</button></c:if>
