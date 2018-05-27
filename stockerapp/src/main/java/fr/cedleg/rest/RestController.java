@@ -7,16 +7,18 @@ import javax.ws.rs.core.Response;
 
 import fr.cedleg.service.DatasourceService;
 
-@Produces({MediaType.TEXT_XML, MediaType.APPLICATION_JSON})
+
 public abstract class RestController {
 
 	@EJB
 	protected DatasourceService dsService;
 
-	public DatasourceService getDsService() {
-		return dsService;
-	}
-
+	/**
+	 * Response XML or JSON propagation from object state
+	 * @param obj
+	 * @return Response (200) or (400)
+	 */
+	@Produces({MediaType.TEXT_XML, MediaType.APPLICATION_JSON})
 	protected Response spreadResponse(Object obj) {
     	if(obj!=null) {
     		return Response.status(200).entity(obj).build();

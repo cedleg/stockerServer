@@ -12,6 +12,11 @@ import fr.cedleg.model.Unit;
 @Path("/stock")
 public class UnitController extends RestController{
 	
+	/**
+	 * Get all Units from GET request
+	 * @return Response (200) JSON or XML List<Unit>
+	 * @return BadRequest (400)
+	 */
     @GET
     @Path("unit/all")
     public Response getUnits(){
@@ -19,6 +24,12 @@ public class UnitController extends RestController{
     	return spreadResponse(list);
     }
     
+    /**
+     * Get Unit from GET request
+     * @param id
+     * @return Response (200) JSON or XML Unit item
+     * @return BadRequest (400)
+     */
     @GET
     @Path("unit/{id}")
     public Response getUnit(@PathParam("id") Long id) {

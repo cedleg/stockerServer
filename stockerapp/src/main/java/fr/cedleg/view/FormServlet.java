@@ -21,6 +21,7 @@ import fr.cedleg.service.DatasourceService;
 
 /**
  * Servlet implementation class FormServlet
+ * Path = /Form or /FomServlet
  */
 @WebServlet("/FormServlet")
 public class FormServlet extends HttpServlet {
@@ -145,6 +146,7 @@ public class FormServlet extends HttpServlet {
 			if(null!=request.getParameter("btn_p_create")) {
 				prod.setReference(request.getParameter("p_ref"));
 				prod.setDescription(request.getParameter("p_desc"));
+				prod.setPrice(Double.parseDouble(request.getParameter("b_price")));
 				prod.setCategory(cat);
 				Stock stockProd = new Stock(Double.parseDouble(request.getParameter("p_stock")), unit);
 				prod.setStock(stockProd);
@@ -165,6 +167,7 @@ public class FormServlet extends HttpServlet {
 				prod.setId(id);
 				prod.setReference(request.getParameter("p_ref"));
 				prod.setDescription(request.getParameter("p_desc"));
+				prod.setPrice(Double.parseDouble(request.getParameter("p_price")));
 				prod.setCategory(cat);
 				if(prod.getStock()!=null) {
 					prod.getStock().setAmount(Double.parseDouble(request.getParameter("p_stock")));

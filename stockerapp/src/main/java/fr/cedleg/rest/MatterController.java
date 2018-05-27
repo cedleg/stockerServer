@@ -12,6 +12,11 @@ import fr.cedleg.model.Matter;
 @Path("/stock")
 public class MatterController extends RestController {
 
+	/**
+	 * Get all Matters from GET request
+	 * @return Response (200) JSON or XML List<Matter>
+	 * @return BadRequest (400)
+	 */
     @GET
     @Path("matter/all")
     public Response getMatters(){
@@ -19,6 +24,12 @@ public class MatterController extends RestController {
     	return spreadResponse(list);
     }
     
+    /**
+     * Get Matter by Id from GET request
+     * @param id
+     * @return Response (200) JSON or XML Category item
+     * @return BadRequest (400)
+     */
     @GET
     @Path("matter/{id}")
     public Response getMatter(@PathParam("id") Long id) {

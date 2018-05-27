@@ -10,6 +10,9 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("/rest")
 public class RestApplication extends Application {
 
+	/**
+	 * Add classes in Rest Application
+	 */
 	@Override
 	public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<Class<?>>();

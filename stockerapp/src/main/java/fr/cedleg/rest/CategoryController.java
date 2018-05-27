@@ -12,6 +12,11 @@ import fr.cedleg.model.Category;
 @Path("/stock")
 public class CategoryController extends RestController {
 
+	/**
+	 * Get all Categories from GET request
+	 * @return Response (200) JSON or XML List<Category>
+	 * @return BadRequest (400)
+	 */
     @GET
     @Path("category/all")
     public Response getCategories(){
@@ -19,6 +24,12 @@ public class CategoryController extends RestController {
     	return spreadResponse(list);
     }
     
+    /**
+     * Get Category by Id from GET request
+     * @param id
+     * @return Response (200) JSON or XML Category item
+     * @return BadRequest (400)
+     */
     @GET
     @Path("category/{id}")
     public Response getCategories(@PathParam("id") Long id) {

@@ -19,6 +19,7 @@ import fr.cedleg.service.DatasourceService;
 
 /**
  * Servlet implementation class ProductServlet
+ * Url path = /dbview
  */
 @WebServlet("/dbview")
 public class DbSettingsServlet extends HttpServlet {

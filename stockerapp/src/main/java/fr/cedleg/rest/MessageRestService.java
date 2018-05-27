@@ -7,6 +7,10 @@ import javax.ws.rs.Produces;
 @Path("/messages")
 public class MessageRestService {
 	
+	/**
+	 * Hello message!
+	 * @return
+	 */
     @GET()
     @Path("hello")
     @Produces("text/plain")
@@ -14,10 +18,14 @@ public class MessageRestService {
         return "Hello!";
     }
     
+    /**
+     * Goodbye message!
+     * @return
+     */
     @GET()
     @Path("bye")
     @Produces("text/plain")
     public String goodBye() {
-        return "Goobye!";
+        return "Goodbye!";
     }
 }

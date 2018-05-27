@@ -27,8 +27,8 @@ public class DatasourceService {
 		em.persist(o);
 	}
 	
-	public void merge(Object o) {
-		em.merge(o);
+	public void merge(Object obj) {
+		em.merge(obj);
 	}
 	
 	public Object find(Class<?> cls, Long id) {

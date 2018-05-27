@@ -12,6 +12,11 @@ import fr.cedleg.model.BatchProducts;
 @Path("/stock")
 public class BatchProductController extends RestController {
 	
+	/**
+	 * Get all Batch of Products from GET request
+	 * @return Response (200) JSON or XML List<BatchProduct>
+	 * @return BadRequest (400)
+	 */
     @GET()
     @Path("batch/all")
     public Response getBathProducts() {	
@@ -19,6 +24,12 @@ public class BatchProductController extends RestController {
     	return spreadResponse(list);
     }
     
+    /**
+     * Get BatchProduct by Id from GET request
+     * @param id
+     * @return Response (200) JSON or XML BatchProduct item
+     * @return BadRequest (400)
+     */
     @GET()
     @Path("batch/{id}")
     public Response getBatch(@PathParam("id") Long id) {
