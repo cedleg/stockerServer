@@ -26,12 +26,12 @@
 							value="<c:out value="${ matter.id }" default="-1"/>" readonly>
 					</div>
 				<div class="form-group">
-					<label for="m_ref">Ref:</label> <input type="text"
+					<label for="m_ref">Ref</label> <input type="text"
 						class="form-control" id="m_ref" name="m_ref"
 						value="<c:out value="${ matter.reference }" />" required>
 				</div>
 				<div class="form-group">
-					<label for="m_name">Name:</label> <input type="text"
+					<label for="m_name">Name</label> <input type="text"
 						class="form-control" id="m_name" name="m_name"
 						value="<c:out value="${ matter.name }" />" required>
 				</div>
@@ -46,9 +46,25 @@
 						value="<c:out value="${ matter.price }" default="0"/>">
 				</div>
 				<div class="form-group">
-					<label for="m_stock">Stock</label> <input type="number" step=".01"
+					<label for="m_stock">Stock</label> <input type="number" step="1"
 						class="form-control" id="m_stock" name="m_stock"
 						value="<c:out value="${ matter.stock.amount }" default="0"/>">
+				</div>
+				
+				<div class="form-group">
+					<label for="m_unit">Unit</label> 
+					<select class="form-control" id="m_unit" name="m_unit">
+						<c:forEach items="${ units }" var="unit" varStatus="status">								
+							<c:choose>
+							    <c:when test="${unit == matter.stock.unit }">
+									<option value="<c:out value="${ unit.id }" default="-1" />" selected ><c:out value="${ unit.type }"/></option>
+							    </c:when>
+							    <c:otherwise>
+									<option value="<c:out value="${ unit.id }" default="-1" />" ><c:out value="${ unit.type }"/></option>
+							    </c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
 				</div>
 				<br> <br>
 				<c:if test = "${param.matter_id == 'new'}"><button type="submit" class="btn btn-success" name="btn_m_create">Create</button></c:if>

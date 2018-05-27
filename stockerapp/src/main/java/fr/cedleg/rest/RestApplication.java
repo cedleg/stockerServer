@@ -7,8 +7,6 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-
-
 @ApplicationPath("/rest")
 public class RestApplication extends Application {
 
@@ -16,7 +14,11 @@ public class RestApplication extends Application {
 	public Set<Class<?>> getClasses() {
         Set<Class<?>> s = new HashSet<Class<?>>();
         s.add(MessageRestService.class);
-        s.add(StockRestService.class);
+        s.add(BatchProductController.class);
+        s.add(ProductController.class);
+        s.add(MatterController.class);
+        s.add(CategoryController.class);
+        s.add(UnitController.class);
         return s;
 	}
 

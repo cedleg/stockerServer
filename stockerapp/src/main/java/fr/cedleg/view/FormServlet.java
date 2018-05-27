@@ -15,6 +15,7 @@ import fr.cedleg.model.BatchProducts;
 import fr.cedleg.model.Category;
 import fr.cedleg.model.Matter;
 import fr.cedleg.model.Product;
+import fr.cedleg.model.Stock;
 import fr.cedleg.model.Unit;
 import fr.cedleg.service.DatasourceService;
 
@@ -42,26 +43,29 @@ public class FormServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getParameterNames().hasMoreElements()) {
 			switch (request.getParameterNames().nextElement()) {
-				case "prod_id" :
-					if(request.getParameter("prod_id").equals("new")) {
-						List<Category> cats = dsService.getAllCategories();
-						request.setAttribute("categories", cats);				
-					}else {
-						Product prod = dsService.getEntityManager().find(Product.class, Long.parseLong(request.getParameter("prod_id")));
-						List<Category> cats = dsService.getAllCategories();
+				case "prod_id" :	
+					List<Category> cats = dsService.getAllCategories();
+					request.setAttribute("categories", cats);
+					List<Unit> units = dsService.getAllUnits();
+					request.setAttribute("units", units);
+					List<Matter> matters = dsService.getAllMatters();
+					request.setAttribute("matters", matters);
+					
+					if(!request.getParameter("prod_id").equals("new")) {
+						Product prod = dsService.getEntityManager().find(Product.class, Long.parseLong(request.getParameter("prod_id")));		
 						request.setAttribute("product", prod);
-						request.setAttribute("categories", cats);	
 					}
 					this.getServletContext().getRequestDispatcher( "/WEB-INF/jsp/form/formProduct.jsp" ).forward( request, response );
-					break;				
+					break;	
+					
 				case "batch_id" :
 					if(request.getParameter("batch_id").equals("new")) {
 						List<Product> products = dsService.getAllProducts();
 						request.setAttribute("products", products);
 					}else {
 						BatchProducts batch = dsService.getEntityManager().find(BatchProducts.class, Long.parseLong(request.getParameter("batch_id")));
-						List<Product> products = dsService.getAllProducts();
 						request.setAttribute("batch", batch);
+						List<Product> products = dsService.getAllProducts();
 						request.setAttribute("products", products);
 					}
 					this.getServletContext().getRequestDispatcher( "/WEB-INF/jsp/form/formBatch.jsp" ).forward( request, response );
@@ -79,10 +83,13 @@ public class FormServlet extends HttpServlet {
 					
 				case "matter_id" :
 					if(request.getParameter("matter_id").equals("new")) {
-
+						List<Unit> unitsToMatter = dsService.getAllUnits();
+						request.setAttribute("units", unitsToMatter);
 					}else {
 						Matter matter = dsService.getEntityManager().find(Matter.class, Long.parseLong(request.getParameter("matter_id")));
 						request.setAttribute("matter", matter);
+						List<Unit> unitsToMatter = dsService.getAllUnits();
+						request.setAttribute("units", unitsToMatter);
 					}
 					this.getServletContext().getRequestDispatcher( "/WEB-INF/jsp/form/formMatter.jsp" ).forward( request, response );
 					break;
@@ -134,19 +141,50 @@ public class FormServlet extends HttpServlet {
 										|| null != request.getParameter("btn_p_delete")){
 			Product prod = new Product(request.getParameter("p_name"), Double.parseDouble(request.getParameter("p_price")));
 			Category cat = (Category) dsService.find(Category.class, Long.parseLong(request.getParameter("p_cat")));
-			
+			Unit unit = (Unit) dsService.find(Unit.class, Long.parseLong(request.getParameter("p_unit")));
 			if(null!=request.getParameter("btn_p_create")) {
 				prod.setReference(request.getParameter("p_ref"));
 				prod.setDescription(request.getParameter("p_desc"));
 				prod.setCategory(cat);
+				Stock stockProd = new Stock(Double.parseDouble(request.getParameter("p_stock")), unit);
+				prod.setStock(stockProd);
+				String[] mattersStr = request.getParameterValues("p_matters");
+				List<Matter> mattersList = new ArrayList<>();
+				if(mattersStr != null) {
+					for(int i = 0; i < mattersStr.length; i++) {
+						Matter m = (Matter) dsService.find(Matter.class, Long.parseLong(mattersStr[i]));
+						mattersList.add(m);
+					}				
+					prod.setMatters(mattersList);
+				}
 				dsService.persit(prod);
 			}
 			if(null!=request.getParameter("btn_p_update")) {
-				long id = Long.parseLong((String) request.getParameter("p_id"));				
+				long id = Long.parseLong((String) request.getParameter("p_id"));		
+				prod = (Product) dsService.find(Product.class, id);
 				prod.setId(id);
 				prod.setReference(request.getParameter("p_ref"));
 				prod.setDescription(request.getParameter("p_desc"));
 				prod.setCategory(cat);
+				if(prod.getStock()!=null) {
+					prod.getStock().setAmount(Double.parseDouble(request.getParameter("p_stock")));
+					prod.getStock().setUnit(unit);
+				}else {
+					Stock stockProd = new Stock(Double.parseDouble(request.getParameter("p_stock")), unit);
+					prod.setStock(stockProd);
+				}
+				
+				String[] mattersStr = request.getParameterValues("p_matters");
+				//response.getWriter().append(pStr.toString());
+				List<Matter> mattersList = new ArrayList<>();
+				if(mattersStr != null) {
+					for(int i = 0; i < mattersStr.length; i++) {
+						Matter m = (Matter) dsService.find(Matter.class, Long.parseLong(mattersStr[i]));
+						mattersList.add(m);
+					}				
+					prod.setMatters(mattersList);
+				}
+					
 				dsService.merge(prod);
 			}
 			if(null!=request.getParameter("btn_p_delete")) {
@@ -189,22 +227,27 @@ public class FormServlet extends HttpServlet {
 		if(null != request.getParameter("btn_m_update") || null != request.getParameter("btn_m_create")
 										|| null != request.getParameter("btn_m_delete")) {
 
+			Unit unit = (Unit) dsService.find(Unit.class, Long.parseLong(request.getParameter("m_unit")));
+			
 			Matter matter = new Matter();
 			if(null!=request.getParameter("btn_m_create")) {
 				matter.setReference(request.getParameter("m_ref"));
 				matter.setName(request.getParameter("m_name"));
 				matter.setDescription(request.getParameter("m_desc"));
 				matter.setPrice(Double.parseDouble(request.getParameter("m_price")));
-				//matter.setAmount(Double.parseDouble(request.getParameter("m_amount")));
+				Stock stockMatter = new Stock(Double.parseDouble(request.getParameter("m_stock")), unit);
+				matter.setStock(stockMatter);
 				dsService.persit(matter);
 			}
 			if(null!=request.getParameter("btn_m_update")) {
-				matter.setId(Long.parseLong(request.getParameter("m_id")));
+				long id = Long.parseLong((String) request.getParameter("m_id"));
+				matter = (Matter) dsService.find(Matter.class, id);
 				matter.setReference(request.getParameter("m_ref"));
 				matter.setName(request.getParameter("m_name"));
 				matter.setDescription(request.getParameter("m_desc"));
 				matter.setPrice(Double.parseDouble(request.getParameter("m_price")));
-				//matter.setAmount(Double.parseDouble(request.getParameter("m_amount")));
+				matter.getStock().setAmount(Double.parseDouble(request.getParameter("m_stock")));
+				matter.getStock().setUnit(unit);
 				dsService.merge(matter);
 			}
 			if(null!=request.getParameter("btn_m_delete")) {

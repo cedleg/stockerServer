@@ -1,16 +1,19 @@
 package fr.cedleg.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,7 +25,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 	@NamedQuery(name= Product.GET_ALL_PRODUCTS, query="select distinct p from Product p order by p.name"),
 	@NamedQuery(name= Product.GET_PRODUCTS_BY_CAT_NAME, query="select distinct p from Product p where p.category.name = :cat order by p.name")	
 })
-
 
 @Entity
 @Table(name = "Product")
@@ -63,9 +65,13 @@ public class Product implements Serializable {
 	@XmlElement
 	private Category category;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@XmlElement
 	private Stock stock;
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@XmlElement
+	private List<Matter> matters;
 	
 	public Product() {
 		super();
@@ -137,6 +143,14 @@ public class Product implements Serializable {
 		this.stock = stock;
 	}
 
+	public List<Matter> getMatters() {
+		return matters;
+	}
+
+	public void setMatters(List<Matter> matters) {
+		this.matters = matters;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -176,8 +190,13 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
+		String stockStr ="";
+		String mattersStr = "";
+		if(stock!=null) stockStr = stock.toString();
+		if(mattersStr!=null) mattersStr = matters.toString();
+		
 		return "Product [id=" + id + ", name=" + name + ", reference=" + reference + ", price=" + price
-				+ ", description=" + description + ", category=" + category + "]";
+				+ ", description=" + description + ", category=" + category + ", stock=" + stockStr + ", matters="+ mattersStr +"]";
 	}
 
 }

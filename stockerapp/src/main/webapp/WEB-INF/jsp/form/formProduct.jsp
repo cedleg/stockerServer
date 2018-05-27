@@ -60,6 +60,42 @@
 						</c:forEach>
 					</select>
 				</div>
+				
+				<div class="form-group">
+					<label for="p_stock">Stock</label> <input type="number" step="1"
+						class="form-control" id="p_stock" name="p_stock"
+						value="<c:out value="${ product.stock.amount }" default="0"/>">
+				</div>
+				
+				<div class="form-group">
+					<label for="p_unit">Unit</label> 
+					<select class="form-control" id="p_unit" name="p_unit">
+						<c:forEach items="${ units }" var="unit" varStatus="status">								
+							<c:choose>
+							    <c:when test="${unit == product.stock.unit }">
+									<option value="<c:out value="${ unit.id }" default="-1" />" selected ><c:out value="${ unit.type }"/></option>
+							    </c:when>
+							    <c:otherwise>
+									<option value="<c:out value="${ unit.id }" default="-1" />" ><c:out value="${ unit.type }"/></option>
+							    </c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
+				</div>
+				
+				<div class="form-group">
+					<label for="p_matters">Matters:</label> <select multiple
+						class="form-control" id="p_matters" name="p_matters">
+						<c:forEach items="${ matters }" var="matter" varStatus="status">
+							<option value="<c:out value="${ matter.id }"/>"
+								<c:forEach items="${ product.matters }" var="m_mat" varStatus="status">
+								 	${p_mat == matter ? 'selected' : ' '}
+								 </c:forEach>><c:out
+									value="${matter}"></c:out>
+							</option>
+						</c:forEach>
+					</select>
+				</div>
 				<br> <br>
 				<c:if test = "${param.prod_id == 'new'}"><button type="submit" class="btn btn-success" name="btn_p_create">Create</button></c:if>
 				<c:if test = "${param.prod_id != 'new'}"><button type="submit" class="btn btn-warning" name="btn_p_update">Update</button></c:if>

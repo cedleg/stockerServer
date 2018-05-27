@@ -81,9 +81,10 @@ public class Unit implements Serializable {
 
 	@Override
 	public String toString() {
-		String result = getClass().getSimpleName() + " ";
+		//String result = getClass().getSimpleName() + " ";
+		String result = "";
 		if (type != null && !type.trim().isEmpty())
-			result += "type: " + type;
+			result += type;
 		return result;
 	}
 }

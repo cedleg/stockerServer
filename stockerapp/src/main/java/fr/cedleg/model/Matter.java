@@ -2,6 +2,7 @@ package fr.cedleg.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,7 +53,7 @@ public class Matter implements Serializable {
 	@XmlElement
 	private Double price;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@XmlElement
 	private Stock stock;
 	
