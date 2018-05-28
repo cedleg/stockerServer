@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="stockerappPU" transaction-type="JTA">
-    <description>Stocker Persistence Unit</description>
-    <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <jta-data-source>java:/stockerappDS</jta-data-source>
+  <persistence-unit name="testStockerPU" transaction-type="JTA">
+    <description>Stocker test Persistence Unit</description>
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
@@ -11,6 +10,21 @@
       <property name="hibernate.format_sql" value="true"/>
       <property name="hibernate.transaction.flush_before_completion" value="true"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+            <property name="hibernate.archive.autodetection" value="class, hbm"/>
+            <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.pool_size" value="5"/>
+            <property name="hibernate.max_fetch_depth" value="5"/>
+            <property name="hibernate.cache.region_prefix" value="hibernate.test"/>
+            <property name="hibernate.cache.region.factory_class"
+                      value="org.hibernate.testing.cache.CachingRegionFactory"/>
+
+            <!--NOTE: hibernate.jdbc.batch_versioned_data should be set to false when testing with Oracle-->
+            <property name="hibernate.jdbc.batch_versioned_data" value="true"/>
+            <property name="javax.persistence.validation.mode" value="NONE"/>
+            <property name="hibernate.service.allow_crawling" value="false"/>
+            <property name="hibernate.session.events.log" value="true"/>      
     </properties>
   </persistence-unit>
 </persistence>
