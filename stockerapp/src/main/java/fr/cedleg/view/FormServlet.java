@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.cedleg.model.BatchProducts;
 import fr.cedleg.model.Category;
+import fr.cedleg.model.ComposeProduct;
 import fr.cedleg.model.Matter;
 import fr.cedleg.model.Product;
 import fr.cedleg.model.Stock;
@@ -143,21 +144,23 @@ public class FormServlet extends HttpServlet {
 			Product prod = new Product(request.getParameter("p_name"), Double.parseDouble(request.getParameter("p_price")));
 			Category cat = (Category) dsService.find(Category.class, Long.parseLong(request.getParameter("p_cat")));
 			Unit unit = (Unit) dsService.find(Unit.class, Long.parseLong(request.getParameter("p_unit")));
+			
 			if(null!=request.getParameter("btn_p_create")) {
 				prod.setReference(request.getParameter("p_ref"));
 				prod.setDescription(request.getParameter("p_desc"));
-				prod.setPrice(Double.parseDouble(request.getParameter("b_price")));
+				prod.setPrice(Double.parseDouble(request.getParameter("_price")));
 				prod.setCategory(cat);
 				Stock stockProd = new Stock(Double.parseDouble(request.getParameter("p_stock")), unit);
 				prod.setStock(stockProd);
-				String[] mattersStr = request.getParameterValues("p_matters");
-				List<Matter> mattersList = new ArrayList<>();
-				if(mattersStr != null) {
-					for(int i = 0; i < mattersStr.length; i++) {
-						Matter m = (Matter) dsService.find(Matter.class, Long.parseLong(mattersStr[i]));
-						mattersList.add(m);
+				String[] compoStr = request.getParameterValues("p_composes");
+				List<ComposeProduct> compoList = new ArrayList<>();
+				if(compoStr != null) {
+					for(int i = 0; i < compoStr.length; i++) {
+						Matter m = (Matter) dsService.find(Matter.class, Long.parseLong(compoStr[i]));
+						ComposeProduct c = new ComposeProduct(1L, m);
+						compoList.add(c);
 					}				
-					prod.setMatters(mattersList);
+					prod.setComposes(compoList);
 				}
 				dsService.persit(prod);
 			}
@@ -177,15 +180,15 @@ public class FormServlet extends HttpServlet {
 					prod.setStock(stockProd);
 				}
 				
-				String[] mattersStr = request.getParameterValues("p_matters");
-				//response.getWriter().append(pStr.toString());
-				List<Matter> mattersList = new ArrayList<>();
-				if(mattersStr != null) {
-					for(int i = 0; i < mattersStr.length; i++) {
-						Matter m = (Matter) dsService.find(Matter.class, Long.parseLong(mattersStr[i]));
-						mattersList.add(m);
+				String[] compoStr = request.getParameterValues("p_composes");
+				List<ComposeProduct> compoList = new ArrayList<>();
+				if(compoStr != null) {
+					for(int i = 0; i < compoStr.length; i++) {
+						Matter m = (Matter) dsService.find(Matter.class, Long.parseLong(compoStr[i]));
+						ComposeProduct c = new ComposeProduct(1L, m);
+						compoList.add(c);
 					}				
-					prod.setMatters(mattersList);
+					prod.setComposes(compoList);
 				}
 					
 				dsService.merge(prod);

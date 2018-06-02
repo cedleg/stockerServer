@@ -53,7 +53,7 @@
 				
 				<div class="form-group">
 					<label for="m_unit">Unit</label> 
-					<select class="form-control" id="m_unit" name="m_unit">
+					<select class="form-control" id="m_unit" name="m_unit" required>
 						<c:forEach items="${ units }" var="unit" varStatus="status">								
 							<c:choose>
 							    <c:when test="${unit == matter.stock.unit }">

@@ -69,10 +69,10 @@ public class Product implements Serializable {
 	@XmlElement
 	private Stock stock;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@XmlElement
-	private List<Matter> matters;
-	
+	private List<ComposeProduct> composes;
+
 	public Product() {
 		super();
 	}
@@ -142,13 +142,13 @@ public class Product implements Serializable {
 	public void setStock(Stock stock) {
 		this.stock = stock;
 	}
-
-	public List<Matter> getMatters() {
-		return matters;
+	
+	public List<ComposeProduct> getComposes() {
+		return composes;
 	}
 
-	public void setMatters(List<Matter> matters) {
-		this.matters = matters;
+	public void setComposes(List<ComposeProduct> composes) {
+		this.composes = composes;
 	}
 
 	@Override
@@ -188,15 +188,16 @@ public class Product implements Serializable {
 		return true;
 	}
 
+	
 	@Override
 	public String toString() {
 		String stockStr ="";
-		String mattersStr = "";
-		if(stock!=null) stockStr = stock.toString();
-		if(mattersStr!=null) mattersStr = matters.toString();
+		String composStr = "";
+		if(stock!= null) stockStr = stock.toString();
+		if(composes!= null) composStr = composes.toString();
 		
 		return "Product [id=" + id + ", name=" + name + ", reference=" + reference + ", price=" + price
-				+ ", description=" + description + ", category=" + category + ", stock=" + stockStr + ", matters="+ mattersStr +"]";
+				+ ", description=" + description + ", category=" + category + ", stock=" + stockStr + ", compo="+ composStr +"]";
 	}
-
+	
 }

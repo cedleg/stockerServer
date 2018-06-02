@@ -14,7 +14,7 @@
 				<th scope="col"><c:out value="product_desc"></c:out></th>
 				<th scope="col"><c:out value="product_price"></c:out></th>
 				<th scope="col"><c:out value="product_stock"></c:out></th>
-				<th scope="col"><c:out value="product_mat"></c:out></th>
+				<th scope="col"><c:out value="product_compo"></c:out></th>
 				<th scope="col"><c:out value="product_cat"></c:out></th>
 				<th scope="col"><a href="/stockerapp/form?prod_id=new"
 					class="btn btn-warning">Create new</a></th>
@@ -30,9 +30,9 @@
 					<td><c:out value="${ product.price }"></c:out></td>
 					<td><c:out value="${ product.stock }"></c:out></td>
 					<td>
-					<c:forEach items="${ product.matters }" var="matter"
+					<c:forEach items="${ product.composes }" var="compo"
 						varStatus="status">					
-							<p><c:out value="${ matter }"></c:out></p>					
+							<p><c:out value="${ compo }"></c:out></p>					
 					</c:forEach>
 					</td>
 					<td><c:out value="${ product.category }"></c:out></td>

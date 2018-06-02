@@ -84,14 +84,13 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="p_matters">Matters:</label> <select multiple
-						class="form-control" id="p_matters" name="p_matters">
+					<label for="p_composes">Compo:</label> <select multiple
+						class="form-control" id="p_composes" name="p_composes">
 						<c:forEach items="${ matters }" var="matter" varStatus="status">
 							<option value="<c:out value="${ matter.id }"/>"
-								<c:forEach items="${ product.matters }" var="m_mat" varStatus="status">
-								 	${p_mat == matter ? 'selected' : ' '}
-								 </c:forEach>><c:out
-									value="${matter}"></c:out>
+								<c:forEach items="${ product.composes }" var="p_comp" varStatus="status">
+								 	${p_comp.matter == matter ? 'selected' : ' '}
+								 </c:forEach>><c:out value="${matter}"></c:out>
 							</option>
 						</c:forEach>
 					</select>
