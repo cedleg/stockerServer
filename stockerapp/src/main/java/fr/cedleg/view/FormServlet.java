@@ -181,14 +181,15 @@ public class FormServlet extends HttpServlet {
 				}
 				
 				String[] compoStr = request.getParameterValues("p_composes");
-				List<ComposeProduct> compoList = new ArrayList<>();
+				//List<ComposeProduct> compoList = new ArrayList<>();
 				if(compoStr != null) {
 					for(int i = 0; i < compoStr.length; i++) {
 						Matter m = (Matter) dsService.find(Matter.class, Long.parseLong(compoStr[i]));
 						ComposeProduct c = new ComposeProduct(1L, m);
-						compoList.add(c);
+						//compoList.add(c);
+						prod.getComposes().add(c);
 					}				
-					prod.setComposes(compoList);
+					//prod.setComposes(compoList);
 				}
 					
 				dsService.merge(prod);

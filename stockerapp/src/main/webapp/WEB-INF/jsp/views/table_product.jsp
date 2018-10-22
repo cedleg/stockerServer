@@ -32,7 +32,7 @@
 					<td>
 					<c:forEach items="${ product.composes }" var="compo"
 						varStatus="status">					
-							<p><c:out value="${ compo }"></c:out></p>					
+							<p><c:out value="${ compo }"></c:out></p>				
 					</c:forEach>
 					</td>
 					<td><c:out value="${ product.category }"></c:out></td>

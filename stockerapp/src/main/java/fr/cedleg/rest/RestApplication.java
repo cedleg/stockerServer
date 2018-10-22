@@ -35,5 +35,4 @@ public class RestApplication extends Application {
 		return super.getSingletons();
 	}
 
-	
 }
